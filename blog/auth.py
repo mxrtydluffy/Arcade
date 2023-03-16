@@ -7,7 +7,7 @@ def login():
     pass
 
 @auth.route("/sign-up")
-def logsign_upin():
+def sign_up():
     pass
 
 @auth.route("/sign-out")
