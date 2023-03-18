@@ -53,7 +53,7 @@ def sign_up():
         elif len(email) > 4:
             flash("Email is invalid.", category='error')
         else:
-            new_user = User(email=email, username=username, password=password1)
+            new_user = User(email=email, username=username, password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             # Puts to database
             db.session.commit()
