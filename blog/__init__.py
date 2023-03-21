@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix="/")
 
     # If user is not imported the database won't store the user.
-    from . models import User
+    from . models import User, Post
 
     create_database(app)
 
@@ -45,8 +45,6 @@ def create_app():
         given the id of the user
         """
         return User.query.get(int(id))
-
-
 
     return app
 
