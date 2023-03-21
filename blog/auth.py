@@ -16,16 +16,17 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             # Checking if the hash password is equivalent to the user model
-            if check_password_hash(user.passowrd, password):
+            if check_password_hash(user.password, password):
                 flash("Logged in!")
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('Password is incorrect.', category='error')
+                flash('Password is incorrect!', category='error')
         else:
             flash('Email does not exist!', category='error')
 
-    return render_template("login.html")
+    # Pass user object representing the ucrrently signed in user
+    return render_template("login.html", user=current_user)
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
 def sign_up():
@@ -61,10 +62,10 @@ def sign_up():
             flash('User created!')
             return redirect(url_for('views.home'))
 
-    return render_template("signup.html")
+    return render_template("signup.html", user=current_user)
 
-@login_required
 @auth.route("/sign-out")
+@login_required
 def sign_out():
     logout_user()
-    return redirect(url_for("home.home"))
+    return redirect(url_for("views.home"))
