@@ -16,8 +16,9 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(200))
     # func.now will fill by default the current time
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    # backref references the user that created the post
-    posts = db.relationship('Post', backref='user', passive_delete=True)
+    # backref references the user that created the post.
+    # Passive delete allows of the posts to be deleted when object is deleted.
+    posts = db.relationship('Post', backref='user', passive_deletes=True)
 
 class Post(db.Model):
     """
@@ -27,4 +28,5 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text= db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    # CASACADE and delete the post what the user has.
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)

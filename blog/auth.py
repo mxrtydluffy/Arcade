@@ -17,7 +17,7 @@ def login():
         if user:
             # Checking if the hash password is equivalent to the user model
             if check_password_hash(user.password, password):
-                flash("Logged in!")
+                flash("Logged in!", category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
@@ -25,7 +25,7 @@ def login():
         else:
             flash('Email does not exist!', category='error')
 
-    # Pass user object representing the ucrrently signed in user
+    # Pass user object representing the recently signed in user
     return render_template("login.html", user=current_user)
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
@@ -51,7 +51,7 @@ def sign_up():
             flash('Username is too short.', category='error')
         elif len(password1) < 6:
             flash('Password is too short.', category='error')
-        elif len(email) > 4:
+        elif len(email) < 4:
             flash("Email is invalid.", category='error')
         else:
             new_user = User(email=email, username=username, password=generate_password_hash(password1, method='sha256'))
