@@ -1,3 +1,4 @@
+<!-- When Changing this page posts.html & home.page will change -->
 {% extends "base.html" %}
 {% block title %} Home {% endblock %}
 {% block content %}
@@ -68,14 +69,15 @@
     </div>
     {% endfor %}
 
+</div>
+
+{% block footer %}
     <div>
         <a href="/create-post"></a>
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Create a Post
         </button>
     </div>
+{% enblock %}
 
-    
-
-</div>
-{% endblock %} {% endblock %}
+{% endblock %}
