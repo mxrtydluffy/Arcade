@@ -1,6 +1,6 @@
 <!-- When Changing this page posts.html & home.page will change -->
 {% extends "base.html" %}
-{% block title %} Home {% endblock %}
+{% block title %}Home{% endblock %}
 {% block content %}
 
 
@@ -59,6 +59,63 @@
       <p class="text-gray-700 text-base">
         {{post.text}}
         <br>
+        
+        <div>
+            <!-- Displaying comments for one post -->
+            <p class="mb-4 space-y-1 md:space-x-1 md:space-y-0" id="comments-{{post.id}}">
+                <a
+                  class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                  data-te-collapse-init
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                  href="#collapseExample"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample">
+                  View comments
+                </a>
+            </p>
+            <div class="!visible hidden" id="comments-expanded-{{post.id}}" data-te-collapse-item>
+                {% for comment in post.comments %}
+                <div class="block rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700 dark:text-neutral-50 justify-content-between align-items-center">
+                    <!-- Move to the Left -->
+                    <div>
+                        Some placeholder content for the collapse component. This panel is
+                        hidden by default but revealed when the user activates the relevant
+                        trigger.
+                        <a href="/posts/{{comment.user.username}}">{{comment.user.username}}</a>: {{comment.text}}
+                    </div>
+                </div>
+                <!-- Showing Dates (Move to the Right) -->
+                <div>
+                    <small class="text-slate-500">{{comment.date_created}}</small>
+                    {% if user.id == comment.author or user.id == post.author %}
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Gets length of comments -->
+        {% if post.comments|length > 0 %}
+
+        <p class="mb-4 space-y-1 md:space-x-1 md:space-y-0">
+            <a
+              class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+              data-te-collapse-init
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              href="#comments-{{post.id}}"
+              role="button"
+              aria-expanded="false"
+              aria-controls="collapseExample">
+              <small>View {{posts.comments|length}} Comments</small>  
+            </a>
+        </p>
+
+        {% else %}
+        <small class="no-underline">No Comments</small>
+        {% endif %}
+        </div>
         <!-- Add Margin lat3r-->
         <form action="" method="POST" action="/create-comment/{{post.id}}">
             <input type="text" id="text" name="text" placeholder="Leave a comment" />
@@ -84,6 +141,6 @@
             Create a Post
         </button>
     </div>
-{% enblock %}
+{% endblock %}
 
 {% endblock %}
