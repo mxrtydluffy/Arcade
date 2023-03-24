@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix="/")
 
     # If user is not imported the database won't store the user.
-    from .models import User, Post, Comment
+    from .models import User, Post, Comment, Like
 
     create_database(app)
 
