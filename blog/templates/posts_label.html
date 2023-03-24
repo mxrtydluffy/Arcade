@@ -5,15 +5,29 @@
 
 
 <h1>{% block header %}Posts{% endblock %}</h1>
-
-<div class="max-w-sm rounded overflow-hidden shadow-lg" id="posts">
+<br>
+<div class="max-w-lg rounded overflow-hidden shadow-lg" id="posts">
     {% for post in posts %}
     <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2"><a href="/posts/{{post.user.username}}">{{post.user.username}}</a></div>
+        <div class="text-xl mb-2 flex justify-between"><strong><a href="/posts/{{post.user.username}}">{{post.user.username}}</a></strong>
+            <!-- Displaying number liked posts-->
+            <div>
+                {{ post.likes|length }}
+                <!-- Map returns generator object -->
+                {% if user.id in post.likes|map(attribute="author")|list %}
+                <a href="/like-post/{{post.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
+                {% else %}
+                <a href="/like-post/{{post.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
+                {% endif %}
+            </div>
+        </div>
       
+        
+        
+    
 
-      <div>
-        <i class="fas-regular fa-thumbs-up"></i>
+        
+
         {% if user.id == post.author %}
             <!--Button information-->
             <div class="flex justify-center">
@@ -58,15 +72,17 @@
                 </div>
                 {% endif %}
             </div>
-      </div>
 
-      
 
       <!-- Body -->
       <p class="text-gray-700 text-base">
         {{post.text}}
         <br>
+    </div>
         
+    
+
+    
         <div>
             <!-- Displaying comments for one post -->
             <p class="mb-4 space-y-1 md:space-x-1 md:space-y-0" id="comments-{{post.id}}">
@@ -166,24 +182,25 @@
         <small class="no-underline">No Comments</small>
         {% endif %}
 
-        </div>
+        
         <!-- Add Margin lat3r-->
         <form action="/create-comment/{{post.id}}" method="POST">
             <input type="text" id="text" name="text" placeholder="Leave a comment" />
-            <button>Comment</button>
+            <button type="submit">Comment</button>
         </form>
       </p>
 
-    </div>
+    
 
-    <div class="flex items-center">
-        <div class="text-sm">
-          <p class="text-gray-900 leading-none">{{post.date_created}}</p>
+        <div class="flex items-center">
+            <div class="text-sm">
+            <p class="text-gray-900 leading-none">{{post.date_created}}</p>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 
-</div>
+    <br>
 
 {% block footer %}
     <div>
@@ -194,6 +211,7 @@
         </a>
         
     </div>
+    
 {% endblock %}
 
 {% endblock %}

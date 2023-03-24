@@ -96,12 +96,11 @@ def delete_comment(comment_id):
     
     return redirect(url_for('views.home'))
 
-@views.route("/like-post/<post_id>", methods=['POST'])
+@views.route("/like-post/<post_id>", methods=['GET'])
 @login_required
 def like(post_id):
     post = Post.query.filter_by(id=post_id)
     like = Like.query.filter_by(author=current_user.id, post_id=post_id).first()
-
 
     # If post doesn't exist checking if the user liked the post.
     # Then the post will be deleted
@@ -115,4 +114,4 @@ def like(post_id):
         db.session.add(like)
         db.session.commit()
     
-    return redirect(url_for('views.like'))
+    return redirect(url_for('views.home'))
