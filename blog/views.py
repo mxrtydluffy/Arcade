@@ -78,7 +78,7 @@ def create_comment(post_id):
         else:
             flash('Post does not exist.', category='error')
 
-    redirect(url_for('views.home'))
+    return redirect(url_for('views.home'))
 
 @views.route("/delete-comment/<comment_id>")
 @login_required

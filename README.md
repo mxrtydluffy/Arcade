@@ -3,5 +3,5 @@ Blog platform for college students to gain insight and interaction. Developed in
 
 ## Features
 * Create, Read, Update & Delete Blog Posts
-* Like & comment on blogs.
+* Like & comment on blogs
 * Authentication & Authorization
